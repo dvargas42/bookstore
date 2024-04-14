@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+<ui:composition template="_template.xhtml">
+	<f:metadata>
+		<f:viewParam name="authorId" value="#{authorBean.authorId}" />
+		<f:viewAction action="#{authorBean.getAuthorById}"
+			if="#{param.authorId != null}" />
+	</f:metadata>
+
+	<ui:define name="title">New Author</ui:define>
+	<ui:define name="content">
+		<h:form>
+			<fieldset>
+				<legend>Author's Data</legend>
+				<h:panelGrid columns="3">
+					<h:outputLabel value="Name: " for="name" />
+					<h:inputText id="name" value="#{authorBean.author.name}"
+						required="true" requiredMessage="Não é permitido nome vazio."
+						validatorMessage="O nome deve ter no mínimo 5 caracteres.">
+						<f:validateLength minimum="5" />
+					</h:inputText>
+					<h:message for="name" />
+
+					<h:outputLabel value="Email: " for="email" />
+					<h:inputText id="email" value="#{authorBean.author.email}"
+						required="true">
+						<f:passThroughAttribute name="type" value="email" />
+					</h:inputText>
+					<h:message for="email" />
+					<h:message for="email" id="messageEmail" />
+
+					<h:commandButton value="Save" action="#{authorBean.record}">
+						<f:ajax execute="@form" render="@form :tableAuthors:tableAuthors" />
+					</h:commandButton>
+				</h:panelGrid>
+			</fieldset>
+		</h:form>
+		<br />
+		<h:form id="tableAuthors">
+			<fieldset>
+				<legend>Author List</legend>
+
+				<h:dataTable id="tableAuthors" value="#{authorBean.authors}"
+					var="author">
+					<h:column>
+						<f:facet name="header">Id</f:facet>
+						<h:outputText value="#{author.id}" />
+					</h:column>
+					<h:column>
+						<f:facet name="header">Name</f:facet>
+						<h:outputText value="#{author.name}" />
+					</h:column>
+					<h:column>
+						<f:facet name="header">Update</f:facet>
+						<h:commandLink value="update" action="#{authorBean.load(author)}" />
+					</h:column>
+					<h:column>
+						<f:facet name="header">Remove</f:facet>
+						<h:commandLink value="remove"
+							action="#{authorBean.remove(author)}" />
+					</h:column>
+				</h:dataTable>
+			</fieldset>
+		</h:form>
+	</ui:define>
+	<ui:define name="footer">
+			Author Register
+		</ui:define>
+</ui:composition>
+</html>
