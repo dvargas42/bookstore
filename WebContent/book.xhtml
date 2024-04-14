@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+	<ui:composition template="_template.xhtml">
+		<ui:define name="title">
+			New Book
+		</ui:define>
+		
+		<ui:define name="content">
+			<h:form>
+				<h:messages id="messages"/>
+				<fieldset>
+					<legend>Book's Data</legend>
+	
+					<h:panelGrid columns="2">
+						<h:outputLabel value="Title: " for="title" />
+						<h:inputText id="title" value="#{bookBean.book.title}" required="true" requiredMessage="Título obrigatório"
+							validatorMessage="O título não pode ser superior a 40">
+							<f:validateLength maximum="40"/>
+							<f:ajax event="blur" render="messages"/>
+						</h:inputText>
+						
+						<h:outputLabel value="ISBN: " for="isbn" />
+						<h:inputText id="isbn" value="#{bookBean.book.isbn}"  validator="#{bookBean.startWithOneDigit}">
+							<f:ajax event="blur" render="messages"/>
+						</h:inputText>
+		
+						<h:outputLabel value="Price: " for="price" />
+						<h:inputText id="price" value="#{bookBean.book.price}" validatorMessage="O Preço deve estar entre 1 e 1000">
+							<f:validateDoubleRange minimum="1" maximum="1000"/>
+							<f:convertNumber type="currency" pattern="R$ #0.00" currencySymbol="R$" locale="pt_BR" />
+							<f:ajax event="blur" render="messages"/>
+						</h:inputText>
+		
+						<h:outputLabel value="Launch Date: " for="launchDate" />
+						<h:inputText id="launchDate" value="#{bookBean.book.launchDate.time}">
+							<f:convertDateTime pattern="dd/MM/yyyy HH:mm" timeZone="America/Sao_Paulo" />
+						</h:inputText>
+					</h:panelGrid>
+				</fieldset>
+				<br/>
+				<fieldset>
+					<legend>Author's Data</legend>
+					<h:panelGrid columns="3">
+						<h:outputLabel value="Select Author: " for="author" />
+						<h:selectOneMenu value="#{bookBean.authorId}" id="author">
+							<f:selectItems value="#{bookBean.authors}" var="author"
+									itemLabel="#{author.name}" itemValue="#{author.id}"/>
+						</h:selectOneMenu>
+						
+						<h:commandButton value="Confirm Author" action="#{bookBean.recordAuthor}">
+							<f:ajax execute="author" render="authorTable"/>
+						</h:commandButton>
+					</h:panelGrid>
+					
+					<h:dataTable id="authorTable" value="#{bookBean.bookAuthors}" var="author">
+						<h:column>
+							<h:outputText value="#{author.name}"/>
+						</h:column>
+						<h:column>
+							<h:commandLink value="x" action="#{bookBean.removeBookAuthor(author)}"/>
+						</h:column>
+					</h:dataTable>
+					<br/>
+					<h:commandLink value="Register new author" action="#{bookBean.formAuthor}" immediate="true"/>
+				</fieldset>
+				<br/>
+				<h:panelGrid columns="2">
+					<h:commandButton value="Save" action="#{bookBean.record}">
+						<f:ajax execute="@form" render="@form :formTableBooks:tableBooks"/>
+					</h:commandButton>
+					<h:commandButton value="Clear" action="#{bookBean.clearForm}" immediate="true">
+						<f:ajax render="@form"/>
+					</h:commandButton>
+				</h:panelGrid>
+				<br/>
+			</h:form>
+			<h:form id="formTableBooks">
+				<fieldset>
+					<legend>Book List</legend>
+					<h:dataTable id="tableBooks" value="#{bookBean.books}" var="book">
+						<h:column>
+							<f:facet name="header">Title</f:facet>
+							<h:outputText value="#{book.title}"/>
+						</h:column>
+						
+						<h:column>
+							<f:facet name="header">ISBN</f:facet>
+							<h:outputText value="#{book.isbn}"/>	
+						</h:column>
+						
+						<h:column>
+							<f:facet name="header">Price</f:facet>
+							<h:outputText value="#{book.price}">
+								<f:convertNumber type="currency" pattern="R$ #0.00" currencySymbol="R$" locale="pt_BR" />
+							</h:outputText>
+						</h:column>
+						
+						<h:column>
+							<f:facet name="header">Date</f:facet>
+							<h:outputText value="#{book.launchDate.time}">
+								<f:convertDateTime pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
+							</h:outputText>	
+						</h:column>
+						<h:column>
+							<f:facet name="header">Update</f:facet>
+							<h:commandLink value="update" action="${bookBean.load(book)}"/>
+						</h:column>	
+						<h:column>
+							<f:facet name="header">Remove</f:facet>
+							<h:commandLink value="x" action="${bookBean.remove(book)}"/>
+						</h:column>	
+					</h:dataTable>
+				</fieldset>
+			</h:form>
+		</ui:define>
+		
+		<ui:define name="footer">
+			Book Register
+		</ui:define>
+	</ui:composition>
+</html>
