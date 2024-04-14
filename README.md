@@ -92,19 +92,63 @@ $ git clone https://github.com/dvargas42/bookstore.git
 ```
 <br>
 
-**2 - Download Tomcat:**
+**2 - Run MySQL in Docker Compose**
 
-First of all, make sure you have Apache Tomcat downloaded and installed on your computer.
+Inside project folder
 
-<br>
+```bash
+$ docker compose up -d
+```
 
-**3 -Open Eclipse:**
+**3 - Import Project in Eclipse**
 
 Launch the Eclipse IDE.
 
 <br>
 
-**4 - Add Tomcat to Eclipse:**
+**4 - Navigate to the project folder:**
+
+Ensure that the projects you want to import are stored in a folder accessible in your file system.
+
+<br>
+
+**5 - Start the import wizard:**
+
+a. In the Eclipse menu, go to "File" > "Import."
+b. In the "Import" dialog, expand the "General" folder and select "Existing Projects into Workspace."
+c. Click "Next."
+
+<br>
+
+**6 - Select the project folder:**
+
+a. Click on "Select root directory."
+b. Navigate to the folder containing your projects and select it.
+c. The projects within that folder will be listed at the bottom of the window.
+d. Ensure that the projects you want to import are checked for import.
+e. Click "Finish."
+
+<br>
+
+**7 - Complete the import:**
+
+Eclipse will now import the selected projects into the workspace. Once the import is complete, the projects will be available in the Eclipse project structure.
+
+<br>
+
+**8 - Download Tomcat:**
+
+First of all, make sure you have Apache Tomcat downloaded and installed on your computer.
+
+<br>
+
+**9 -Open Eclipse:**
+
+Launch the Eclipse IDE.
+
+<br>
+
+**10 - Add Tomcat to Eclipse:**
 
 a. In the Eclipse menu, go to "Window" > "Preferences."
 
@@ -120,7 +164,7 @@ f. Eclipse should now automatically detect the Tomcat version. Click "Finish" to
 
 <br>
 
-**5 - Configure Tomcat in Eclipse:**
+**11 - Configure Tomcat in Eclipse:**
 
 a. Now that Tomcat is added to Eclipse, you can configure it for use in your projects.
 
@@ -134,7 +178,7 @@ e. Select the Tomcat you added earlier and click "Apply and Close."
 
 <br>
 
-**6 - Start Tomcat in Eclipse:**
+**12 - Start Tomcat in Eclipse:**
 
 a. In the Eclipse menu, go to "Window" > "Show View" > "Servers."
 
@@ -150,41 +194,6 @@ f. Now, you will see Tomcat listed in the "Servers" view. Right-click on the Tom
 
 <br>
 
-**7 - Import Project in Eclipse**
-
-Launch the Eclipse IDE.
-
-<br>
-
-**8 - Navigate to the project folder:**
-
-Ensure that the projects you want to import are stored in a folder accessible in your file system.
-
-<br>
-
-**9 - Start the import wizard:**
-
-a. In the Eclipse menu, go to "File" > "Import."
-b. In the "Import" dialog, expand the "General" folder and select "Existing Projects into Workspace."
-c. Click "Next."
-
-<br>
-
-**10 - Select the project folder:**
-
-a. Click on "Select root directory."
-b. Navigate to the folder containing your projects and select it.
-c. The projects within that folder will be listed at the bottom of the window.
-d. Ensure that the projects you want to import are checked for import.
-e. Click "Finish."
-
-<br>
-
-**11 - Complete the import:**
-
-Eclipse will now import the selected projects into the workspace. Once the import is complete, the projects will be available in the Eclipse project structure.
-
-<br>
 
 ## 🤔 How to contribute
 
